@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+:root {
+	--primary-blue: #4a9eea;
+	--text-primary: #1a1a1a;
+	--text-secondary: #666666;
+	--background-light: #f8fafc;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+}
+
+/* Chart customizations */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+	stroke: #e5e7eb;
+}
+
+.recharts-text {
+	font-family: 'Inter', sans-serif;
+	font-size: 12px;
+	fill: var(--text-secondary);
+}
+
+.recharts-legend-item-text {
+	color: var(--text-secondary) !important;
+	font-family: 'Inter', sans-serif;
+	font-weight: 300;
+}
+
+.recharts-tooltip-wrapper {
+	background-color: white !important;
+	border: 1px solid #e5e7eb !important;
+	border-radius: 8px !important;
+	box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+	font-family: 'Inter', sans-serif;
+}
