@@ -4,6 +4,8 @@ import { CompanyInfoCard } from '../../components/companyInfoCard/CompanyInfoCar
 import { useGetCompanyRatios } from '../../hooks/useGetCompanyRatios';
 import { useGetCompanyProfile } from '../../hooks/useGetCompanyProfile';
 import { formatChartData } from '../../common/utils/formatChartData';
+import { Header } from '../../components/header/Header';
+import { SubMenu } from '../../components/subMenu/SubMenu';
 
 export const Dashboard = () => {
 	const { symbol } = useParams();
@@ -26,33 +28,41 @@ export const Dashboard = () => {
 
 	return (
 		<div className='min-h-screen bg-[#F8FAFC]'>
-			<div className='container mx-auto px-6 py-8'>
-				{companyProfile && (
-					<CompanyInfoCard
-						logoUrl={companyProfile[0]?.image}
-						companyName={companyProfile[0]?.companyName}
-						category={companyProfile[0]?.sector}
-					/>
-				)}
+			<Header />
+			<main>
+				<div className='container mx-auto px-6 py-8'>
+					{companyProfile && (
+						<>
+							<CompanyInfoCard
+								logoUrl={companyProfile[0]?.image}
+								companyName={companyProfile[0]?.companyName}
+								category={companyProfile[0]?.sector}
+							/>
+							<div className='mt-6'>
+								<SubMenu />
+							</div>
+						</>
+					)}
 
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
-					<Chart
-						data={perData}
-						type='line'
-						title='PER RATIO'
-						dataKey={'priceEarningsRatio'}
-					/>
-					<Chart
-						data={perData}
-						type='bar'
-						title='Bar Chart 1'
-						dataKey={'priceEarningsRatio'}
-					/>
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-8'>
+						<Chart
+							data={perData}
+							type='line'
+							title='PER RATIO'
+							dataKey={'priceEarningsRatio'}
+						/>
+						<Chart
+							data={perData}
+							type='bar'
+							title='Bar Chart 1'
+							dataKey={'priceEarningsRatio'}
+						/>
 
-					<Chart data={chartData} type='line' title='Bar Chart 1' />
-					<Chart data={perData} type='line' title='Bar Chart 1' />
+						<Chart data={chartData} type='line' title='Bar Chart 1' />
+						<Chart data={perData} type='line' title='Bar Chart 1' />
+					</div>
 				</div>
-			</div>
+			</main>
 		</div>
 	);
 };
