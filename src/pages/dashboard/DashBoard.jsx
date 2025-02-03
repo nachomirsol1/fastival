@@ -9,13 +9,21 @@ import { Header } from '../../components/header/Header';
 import { SubMenu } from '../../components/subMenu/SubMenu';
 import { Sidebar } from '../../components/sidebar/Sidebar';
 import { FinancialStatements } from './components/financialStatements/FinancialStatements';
-
+import { useGetCompanyIncomeStatement } from '../../hooks/useGetCompanyIncomeStatement';
+import { useGetCompanyBalanceSheetStatement } from '../../hooks/useGetCompanyBalanceSheetStatement';
+import { useGetCompanyCashflowStatement } from '../../hooks/useGetCompanyCashflowStatement';
 export const Dashboard = () => {
 	const { symbol } = useParams();
 	const [activeTab, setActiveTab] = useState('Income Statement');
 	const { isLoading, companyRatios, error } = useGetCompanyRatios(symbol);
 	const { isLoading: companyProfileLoading, companyProfile } =
 		useGetCompanyProfile(symbol);
+	const { incomeStatement, incomeLoading, incomeError } =
+		useGetCompanyIncomeStatement(symbol);
+	const { balanceSheet, balanceSheetLoading, balanceSheetError } =
+		useGetCompanyBalanceSheetStatement(symbol);
+	const { cashflow, cashflowLoading, cashflowError } =
+		useGetCompanyCashflowStatement(symbol);
 	const chartData = [
 		{ name: 'Jan', value: 400 },
 		{ name: 'Feb', value: 300 },
@@ -23,7 +31,7 @@ export const Dashboard = () => {
 		{ name: 'Apr', value: 278 },
 		{ name: 'May', value: 189 },
 	];
-	console.log(companyProfile);
+	console.log(incomeStatement);
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading data</div>;

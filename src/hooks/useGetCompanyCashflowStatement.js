@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCashflowStatement } from '../services/companyFinancialStatements';
 
-export const useGetCompanyIncomeStatement = (symbol) => {
+export const useGetCompanyCashflowStatement = (symbol) => {
 	const { data, error, isLoading } = useQuery({
-		queryKey: ['company', symbol],
+		queryKey: ['cashflow', symbol],
 		queryFn: () => getCashflowStatement(symbol),
 		enabled: Boolean(symbol),
 	});
-	return { cashflowStatement: data, casflowLoading: isLoading, error };
+	return { cashflow: data, cashflowLoading: isLoading, cashflowError: error };
 };
