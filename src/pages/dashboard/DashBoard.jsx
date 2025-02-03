@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Chart } from '../../components/chart/Chart';
 import { useParams } from 'react-router-dom';
 import { CompanyInfoCard } from '../../components/companyInfoCard/CompanyInfoCard';
@@ -6,9 +7,12 @@ import { useGetCompanyProfile } from '../../hooks/useGetCompanyProfile';
 import { formatChartData } from '../../common/utils/formatChartData';
 import { Header } from '../../components/header/Header';
 import { SubMenu } from '../../components/subMenu/SubMenu';
+import { Sidebar } from '../../components/sidebar/Sidebar';
+import { FinancialStatements } from './components/financialStatements/FinancialStatements';
 
 export const Dashboard = () => {
 	const { symbol } = useParams();
+	const [activeTab, setActiveTab] = useState('Income Statement');
 	const { isLoading, companyRatios, error } = useGetCompanyRatios(symbol);
 	const { isLoading: companyProfileLoading, companyProfile } =
 		useGetCompanyProfile(symbol);
@@ -28,41 +32,68 @@ export const Dashboard = () => {
 
 	return (
 		<div className='min-h-screen bg-[#F8FAFC]'>
-			<Header />
-			<main>
-				<div className='container mx-auto px-6 py-8'>
-					{companyProfile && (
-						<>
-							<CompanyInfoCard
-								logoUrl={companyProfile[0]?.image}
-								companyName={companyProfile[0]?.companyName}
-								category={companyProfile[0]?.sector}
-							/>
-							<div className='mt-6'>
-								<SubMenu />
-							</div>
-						</>
-					)}
+			<Sidebar />
+			<div className='ml-64'>
+				<Header />
+				<main>
+					<div className='container mx-auto px-6 py-8'>
+						{companyProfile && (
+							<>
+								<CompanyInfoCard
+									logoUrl={companyProfile[0]?.image}
+									companyName={companyProfile[0]?.companyName}
+									category={companyProfile[0]?.sector}
+								/>
+								<div className='mt-6'>
+									<SubMenu activeTab={activeTab} setActiveTab={setActiveTab} />
+								</div>
+							</>
+						)}
 
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-8'>
-						<Chart
-							data={perData}
-							type='line'
-							title='PER RATIO'
-							dataKey={'priceEarningsRatio'}
-						/>
-						<Chart
-							data={perData}
-							type='bar'
-							title='Bar Chart 1'
-							dataKey={'priceEarningsRatio'}
-						/>
+						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-8'>
+							{activeTab === 'Income Statement' && (
+								<>
+									<Chart
+										data={perData}
+										type='line'
+										title='PER RATIO'
+										dataKey={'priceEarningsRatio'}
+									/>
+									<Chart
+										data={perData}
+										type='bar'
+										title='Bar Chart 1'
+										dataKey={'priceEarningsRatio'}
+									/>
 
-						<Chart data={chartData} type='line' title='Bar Chart 1' />
-						<Chart data={perData} type='line' title='Bar Chart 1' />
+									<Chart data={chartData} type='line' title='Bar Chart 1' />
+									<Chart data={perData} type='line' title='Bar Chart 1' />
+									<Chart
+										data={perData}
+										type='line'
+										title='PER RATIO'
+										dataKey={'priceEarningsRatio'}
+									/>
+									<Chart
+										data={perData}
+										type='bar'
+										title='Bar Chart 1'
+										dataKey={'priceEarningsRatio'}
+									/>
+
+									<Chart data={chartData} type='line' title='Bar Chart 1' />
+									<Chart data={perData} type='line' title='Bar Chart 1' />
+								</>
+							)}
+						</div>
+						<div>
+							{activeTab === 'Balance Sheet' && (
+								<FinancialStatements data={[]} />
+							)}
+						</div>
 					</div>
-				</div>
-			</main>
+				</main>
+			</div>
 		</div>
 	);
 };
