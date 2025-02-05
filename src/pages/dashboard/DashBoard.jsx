@@ -58,45 +58,19 @@ export const Dashboard = () => {
 							</>
 						)}
 
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-6 mt-8'>
-							{activeTab === 'Income Statement' && (
-								<>
-									<Chart
-										data={perData}
-										type='line'
-										title='PER RATIO'
-										dataKey={'priceEarningsRatio'}
-									/>
-									<Chart
-										data={perData}
-										type='bar'
-										title='Bar Chart 1'
-										dataKey={'priceEarningsRatio'}
-									/>
-
-									<Chart data={chartData} type='line' title='Bar Chart 1' />
-									<Chart data={perData} type='line' title='Bar Chart 1' />
-									<Chart
-										data={perData}
-										type='line'
-										title='PER RATIO'
-										dataKey={'priceEarningsRatio'}
-									/>
-									<Chart
-										data={perData}
-										type='bar'
-										title='Bar Chart 1'
-										dataKey={'priceEarningsRatio'}
-									/>
-
-									<Chart data={chartData} type='line' title='Bar Chart 1' />
-									<Chart data={perData} type='line' title='Bar Chart 1' />
-								</>
+						<div className='grid grid-cols-1 md:grid-cols-1 gap-6 mt-8'>
+							{activeTab === 'Income Statement' && !incomeLoading && (
+								<FinancialStatements data={incomeStatement || []} />
 							)}
 						</div>
 						<div>
-							{activeTab === 'Balance Sheet' && (
-								<FinancialStatements data={[]} />
+							{activeTab === 'Balance Sheet' && !balanceSheetLoading && (
+								<FinancialStatements data={balanceSheet} />
+							)}
+						</div>
+						<div>
+							{activeTab === 'Cash Flow' && !cashflowLoading && (
+								<FinancialStatements data={cashflow} />
 							)}
 						</div>
 					</div>

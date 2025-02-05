@@ -22,27 +22,30 @@ export const Table = ({ data }) => {
 	}, [data]);
 
 	return (
-		<div className='overflow-x-auto bg-white rounded-lg shadow p-4'>
-			<table className='w-full text-sm text-left text-gray-500'>
-				<thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+		<div className='overflow-x-auto bg-white rounded-lg shadow-md'>
+			<table className='w-full text-sm text-left'>
+				<thead className='text-xs uppercase bg-gray-50 border-r border-indigo-200'>
 					<tr>
-						<th className='px-4 py-2 font-medium'>Metric</th>
+						<th className='px-6 py-3 font-medium text-gray-700'>Metric</th>
 						{years.map((year) => (
-							<th key={year} className='px-4 py-2 font-medium'>
+							<th key={year} className='px-6 py-3 font-medium text-gray-700'>
 								{year}
 							</th>
 						))}
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className='divide-y divide-dashed divide-gray-200'>
 					{metrics.map(({ key, label }) => (
 						<tr key={key} className='border-b hover:bg-gray-50 cursor-pointer'>
-							<th className='px-4 py-2 font-medium text-gray-900 whitespace-nowrap'>
+							<th
+								scope='row'
+								className='px-6 py-4 font-medium text-indigo-400 whitespace-nowrap border-r border-indigo-100'
+							>
 								{label}
 							</th>
 							{sortedData.map((item) => (
-								<td key={item.date} className='px-4 py-2'>
-									{formatNumber(Number(item[key]))}
+								<td key={item.date} className='px-6 py-4 text-gray-500'>
+									{Number(item[key])}
 								</td>
 							))}
 						</tr>
