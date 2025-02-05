@@ -37,7 +37,12 @@ export const Dashboard = () => {
 	if (error) return <div>Error loading data</div>;
 
 	const perData = formatChartData(companyRatios, 'priceEarningsRatio');
+	const renderTableData = (loading, error, data) => {
+		if (loading) return <p>Loading...</p>;
+		if (error) return <p>Error loading data</p>;
 
+		return <FinancialStatements data={data} />;
+	};
 	return (
 		<div className='min-h-screen bg-[#F8FAFC]'>
 			<Sidebar />
@@ -59,19 +64,20 @@ export const Dashboard = () => {
 						)}
 
 						<div className='grid grid-cols-1 md:grid-cols-1 gap-6 mt-8'>
-							{activeTab === 'Income Statement' && !incomeLoading && (
-								<FinancialStatements data={incomeStatement || []} />
-							)}
+							{activeTab === 'Income Statement' &&
+								renderTableData(incomeLoading, incomeError, incomeStatement)}
 						</div>
 						<div>
-							{activeTab === 'Balance Sheet' && !balanceSheetLoading && (
-								<FinancialStatements data={balanceSheet} />
-							)}
+							{activeTab === 'Balance Sheet' &&
+								renderTableData(
+									balanceSheetLoading,
+									balanceSheetError,
+									balanceSheet
+								)}
 						</div>
 						<div>
-							{activeTab === 'Cash Flow' && !cashflowLoading && (
-								<FinancialStatements data={cashflow} />
-							)}
+							{activeTab === 'Cash Flow' &&
+								renderTableData(cashflowLoading, cashflowError, cashflow)}
 						</div>
 					</div>
 				</main>
