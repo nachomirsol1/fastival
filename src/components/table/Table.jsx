@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
+import { formatNumber } from '../../common/utils/formatChartData';
 
-export const Table = ({ data }) => {
+export const Table = ({ data, onRowClick }) => {
 	const sortedData = useMemo(() => {
 		return [...data].sort(
 			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -36,7 +37,11 @@ export const Table = ({ data }) => {
 				</thead>
 				<tbody className='divide-y divide-dashed divide-gray-200'>
 					{metrics.map(({ key, label }) => (
-						<tr key={key} className='border-b hover:bg-gray-50 cursor-pointer'>
+						<tr
+							key={key}
+							className='border-b hover:bg-gray-50 cursor-pointer'
+							onClick={() => onRowClick(key)}
+						>
 							<th
 								scope='row'
 								className='px-6 py-4 font-medium text-indigo-400 whitespace-nowrap border-r border-indigo-100'
@@ -45,7 +50,7 @@ export const Table = ({ data }) => {
 							</th>
 							{sortedData.map((item) => (
 								<td key={item.date} className='px-6 py-4 text-gray-500'>
-									{Number(item[key])}
+									{formatNumber(Number(item[key]))}
 								</td>
 							))}
 						</tr>

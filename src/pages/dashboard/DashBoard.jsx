@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Chart } from '../../components/chart/Chart';
 import { useParams } from 'react-router-dom';
 import { CompanyInfoCard } from '../../components/companyInfoCard/CompanyInfoCard';
 import { useGetCompanyRatios } from '../../hooks/useGetCompanyRatios';
@@ -12,9 +11,11 @@ import { FinancialStatements } from './components/financialStatements/FinancialS
 import { useGetCompanyIncomeStatement } from '../../hooks/useGetCompanyIncomeStatement';
 import { useGetCompanyBalanceSheetStatement } from '../../hooks/useGetCompanyBalanceSheetStatement';
 import { useGetCompanyCashflowStatement } from '../../hooks/useGetCompanyCashflowStatement';
+
 export const Dashboard = () => {
 	const { symbol } = useParams();
 	const [activeTab, setActiveTab] = useState('Income Statement');
+
 	const { isLoading, companyRatios, error } = useGetCompanyRatios(symbol);
 	const { isLoading: companyProfileLoading, companyProfile } =
 		useGetCompanyProfile(symbol);
@@ -24,14 +25,6 @@ export const Dashboard = () => {
 		useGetCompanyBalanceSheetStatement(symbol);
 	const { cashflow, cashflowLoading, cashflowError } =
 		useGetCompanyCashflowStatement(symbol);
-	const chartData = [
-		{ name: 'Jan', value: 400 },
-		{ name: 'Feb', value: 300 },
-		{ name: 'Mar', value: 200 },
-		{ name: 'Apr', value: 278 },
-		{ name: 'May', value: 189 },
-	];
-	console.log(incomeStatement);
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading data</div>;
