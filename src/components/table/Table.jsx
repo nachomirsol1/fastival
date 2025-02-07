@@ -29,7 +29,7 @@ export const Table = ({ data, onRowClick }) => {
 					<tr>
 						<th className='px-6 py-3 font-medium text-gray-700'>Metric</th>
 						{years.map((year) => (
-							<th key={year} className='px-6 py-3 font-medium text-gray-700'>
+							<th key={year} className='px-6 py-3 font-medium text-gray-400'>
 								{year}
 							</th>
 						))}
@@ -44,7 +44,7 @@ export const Table = ({ data, onRowClick }) => {
 						>
 							<th
 								scope='row'
-								className='px-6 py-4 font-medium text-indigo-400 whitespace-nowrap border-r border-indigo-100'
+								className='px-6 py-4 font-medium text-gray-600 whitespace-nowrap border-r border-indigo-100'
 							>
 								{label}
 							</th>

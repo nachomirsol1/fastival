@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Chart } from '../../../../components/chart/Chart';
 import { Table } from '../../../../components/table/Table';
-import { formatNumber } from '../../../../common/utils/formatChartData';
+import { NoMetricCard } from '../../../../components/noMetricCard/NoMetricCard';
 
 export const FinancialStatements = ({ data }) => {
 	const [selectedMetric, setSelectedMetric] = useState('');
@@ -17,12 +17,17 @@ export const FinancialStatements = ({ data }) => {
 	return (
 		<div className='w-full mx-auto space-y-8'>
 			<div className='grid grid-cols-1 gap-6'>
-				{selectedMetric && (
+				{selectedMetric ? (
 					<Chart
 						data={chartData || []}
 						type='bar'
 						title={selectedMetric}
 						dataKey={'value'}
+					/>
+				) : (
+					<NoMetricCard
+						text={'No Metric Selected'}
+						subText={'Select a metric to view charts'}
 					/>
 				)}
 			</div>

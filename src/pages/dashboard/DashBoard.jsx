@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { CompanyInfoCard } from '../../components/companyInfoCard/CompanyInfoCard';
 import { useGetCompanyRatios } from '../../hooks/useGetCompanyRatios';
 import { useGetCompanyProfile } from '../../hooks/useGetCompanyProfile';
-import { formatChartData } from '../../common/utils/formatChartData';
 import { Header } from '../../components/header/Header';
 import { SubMenu } from '../../components/subMenu/SubMenu';
 import { Sidebar } from '../../components/sidebar/Sidebar';
@@ -11,6 +10,7 @@ import { FinancialStatements } from './components/financialStatements/FinancialS
 import { useGetCompanyIncomeStatement } from '../../hooks/useGetCompanyIncomeStatement';
 import { useGetCompanyBalanceSheetStatement } from '../../hooks/useGetCompanyBalanceSheetStatement';
 import { useGetCompanyCashflowStatement } from '../../hooks/useGetCompanyCashflowStatement';
+import { Spinner } from '../../components/spinner/Spinner';
 
 export const Dashboard = () => {
 	const { symbol } = useParams();
@@ -29,9 +29,8 @@ export const Dashboard = () => {
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading data</div>;
 
-	const perData = formatChartData(companyRatios, 'priceEarningsRatio');
 	const renderTableData = (loading, error, data) => {
-		if (loading) return <p>Loading...</p>;
+		if (loading) return <Spinner />;
 		if (error) return <p>Error loading data</p>;
 
 		return <FinancialStatements data={data} />;
