@@ -8,9 +8,9 @@ export const Table = ({ data, onRowClick }) => {
 		);
 	}, [data]);
 
-	const years = sortedData.map((item) =>
-		new Date(item.date).getFullYear().toString()
-	);
+	const years = sortedData
+		.map((item) => new Date(item.date).getFullYear().toString())
+		.reverse();
 
 	const metrics = useMemo(() => {
 		const allKeys = Object.keys(data[0] || {}).filter(
@@ -48,11 +48,13 @@ export const Table = ({ data, onRowClick }) => {
 							>
 								{label}
 							</th>
-							{sortedData.map((item) => (
-								<td key={item.date} className='px-6 py-4 text-gray-500'>
-									{formatNumber(Number(item[key]))}
-								</td>
-							))}
+							{sortedData
+								.map((item) => (
+									<td key={item.date} className='px-6 py-4 text-gray-500'>
+										{formatNumber(Number(item[key]))}
+									</td>
+								))
+								.reverse()}
 						</tr>
 					))}
 				</tbody>

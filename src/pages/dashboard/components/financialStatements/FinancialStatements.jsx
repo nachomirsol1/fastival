@@ -9,10 +9,12 @@ export const FinancialStatements = ({ data }) => {
 		setSelectedMetric(metric);
 	};
 	const chartData = useMemo(() => {
-		return data.map((entry) => ({
-			name: new Date(entry.date).getFullYear().toString(),
-			value: entry[selectedMetric],
-		}));
+		return data
+			.map((entry) => ({
+				name: new Date(entry.date).getFullYear().toString(),
+				value: entry[selectedMetric],
+			}))
+			.reverse();
 	}, [data, selectedMetric]);
 	return (
 		<div className='w-full mx-auto space-y-8'>

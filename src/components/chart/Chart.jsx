@@ -10,6 +10,7 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from 'recharts';
+import { formatNumber } from '../../common/utils/formatChartData';
 
 export const Chart = ({ data, type, title, dataKey }) => {
 	const ChartComponent = type === 'bar' ? BarChart : LineChart;
@@ -29,9 +30,10 @@ export const Chart = ({ data, type, title, dataKey }) => {
 					/>
 					<YAxis
 						tick={{ fontSize: 12 }}
-						width={60}
+						width={70}
 						tickLine={false}
 						axisLine={{ stroke: '#E5E7EB' }}
+						tickFormatter={formatNumber}
 					/>
 					<Tooltip />
 					<Legend />
