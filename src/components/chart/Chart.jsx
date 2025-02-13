@@ -9,13 +9,20 @@ import {
 	Tooltip,
 	Legend,
 	ResponsiveContainer,
+	ReferenceLine,
 } from 'recharts';
 import { formatNumber } from '../../common/utils/formatChartData';
 
 export const Chart = ({ data, type, title, dataKey }) => {
+	const startValue = data[0]?.value;
+	const endValue = data[data.length - 1]?.value || 0;
+	const trendLineData = [
+		{ x: data[0].name, y: startValue },
+		{ x: data[data.length - 1].name, y: endValue },
+	];
 	const ChartComponent = type === 'bar' ? BarChart : LineChart;
 	const DataComponent = type === 'bar' ? Bar : Line;
-
+	console.log(trendLineData);
 	return (
 		<div className='w-full p-6 bg-white rounded-lg shadow-md'>
 			<h2 className='text-[15px] font-semibold mb-6 text-gray-900'>{title}</h2>
@@ -44,6 +51,15 @@ export const Chart = ({ data, type, title, dataKey }) => {
 						stroke='#8884d8'
 						strokeWidth={3}
 					/>
+					{type === 'bar' && (
+						<ReferenceLine
+							segment={trendLineData}
+							stroke='#444'
+							strokeDasharray='12 12'
+							strokeWidth={3}
+							ifOverflow='extendDomain'
+						/>
+					)}
 				</ChartComponent>
 			</ResponsiveContainer>
 		</div>
